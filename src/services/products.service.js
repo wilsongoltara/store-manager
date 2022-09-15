@@ -12,8 +12,7 @@ const listProductById = async (productId) => {
   if (product && product.length === 0) {
     return { statusCode: HTTP_NOT_FOUND, result: 'Product not found' };
   }
-
-  if (product.length > 0) return { statusCode: HTTP_OK_SUCCESS, result: product };
+  return { statusCode: HTTP_OK_SUCCESS, result: product };
 };
 
 module.exports = {
