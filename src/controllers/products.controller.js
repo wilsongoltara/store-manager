@@ -9,7 +9,8 @@ const listProducts = async (_req, res) => {
 const listProductById = async (req, res) => {
   const { params: { id } } = req;
   const { statusCode, result } = await productsService.listProductById(id);
-  res.status(statusCode).json(result);
+  if (statusCode === 200) return res.status(statusCode).json(...result);
+  if (statusCode === 404) return res.status(statusCode).json({ message: result });
 };
 
 module.exports = {

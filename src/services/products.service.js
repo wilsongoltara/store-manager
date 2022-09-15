@@ -8,9 +8,9 @@ const listProducts = async () => {
 
 const listProductById = async (productId) => {
   const product = await productsModel.listProductById(productId);
-  
+
   if (product && product.length === 0) {
-    return { statusCode: HTTP_NOT_FOUND, result: 'product not fount' };
+    return { statusCode: HTTP_NOT_FOUND, result: 'Product not found' };
   }
 
   if (product.length > 0) return { statusCode: HTTP_OK_SUCCESS, result: product };
