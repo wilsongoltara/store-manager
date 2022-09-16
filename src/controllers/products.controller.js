@@ -4,12 +4,12 @@ const { HTTP_OK_SUCCESS } = require('../utils/customMessage');
 const addProduct = async (req, res) => {
   const newProduct = req.body;
   const { type, message } = await productsService.addProduct(newProduct);
-  res.status(type).json(message);
+  return res.status(type).json(message);
 };
 
 const listProducts = async (_req, res) => {
   const products = await productsService.listProducts();
-  res.status(HTTP_OK_SUCCESS).json(products);
+  return res.status(HTTP_OK_SUCCESS).json(products);
 };
 
 const listProductById = async (req, res) => {
