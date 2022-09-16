@@ -1,9 +1,10 @@
-const { HTTP_CREATED } = require('../utils/customMessage');
+const salesService = require('../services/sales.service');
 
 const addSales = async (req, res) => {
-  const { body } = req;
-  // addSales from services
-  res.status(HTTP_CREATED).json({ message: 'created' });
+  const newProduct = req.body;
+  const { type, message } = await salesService.addSales(newProduct);
+
+  res.status(type).json(message);
 };
 
 module.exports = {
