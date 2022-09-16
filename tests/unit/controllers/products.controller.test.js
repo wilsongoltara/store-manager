@@ -18,7 +18,7 @@ const {
   productAddedMock,
 } = require("../../mocks/products.mocks");
 
-describe("Unit test the controller layer of the application:", () => {
+describe("Test controller products", () => {
   afterEach(sinon.restore);
 
   it("GET: a list of products from the endpoint '/products'.", (done) => {

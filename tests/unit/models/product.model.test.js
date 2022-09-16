@@ -6,11 +6,9 @@ const productsModel = require('../../../src/models/products.model');
 const {
   productsMock,
   productByIdMock,
-  newProductMock,
-  listAfterAddProductMock,
 } = require('../../mocks/products.mocks');
 
-describe('Unit test the model layer of the application:', () => {
+describe('Test model products', () => {
   afterEach(sinon.restore);
 
   it("Test if it receives a list of products from the endpoint '/products'.", async () => {

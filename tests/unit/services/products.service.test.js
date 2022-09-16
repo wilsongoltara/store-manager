@@ -9,7 +9,7 @@ const {
   productNotFoundMock,
 } = require("../../mocks/products.mocks");
 
-describe("Unit test the servic layer of the application:", () => {
+describe("Test service product", () => {
   afterEach(sinon.restore);
 
   it("Test if it receives a list of products from the endpoint '/products'.", async () => {
