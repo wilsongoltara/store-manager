@@ -23,9 +23,9 @@ describe("Unit test the servic layer of the application:", () => {
   it("Test if it receives a products from the endpoint '/products/:id.", async () => {
     sinon.stub(productsModel, "listProductById").resolves([productByIdMock]);
 
-    const { result } = await productsService.listProductById(1);
+    const { message } = await productsService.listProductById(1);
 
-    expect(result).to.deep.equal([productByIdMock]);
+    expect(message).to.deep.equal([productByIdMock]);
   });
 
   it("Test if it receives a error message from the endpoint '/products/:id' invalid.", async () => {
@@ -33,8 +33,8 @@ describe("Unit test the servic layer of the application:", () => {
       .stub(productsModel, "listProductById")
       .resolves([productNotFoundMock]);
 
-    const { result } = await productsService.listProductById(undefined);
+    const { message } = await productsService.listProductById(undefined);
 
-    expect(result).to.deep.equal([productNotFoundMock]);
+    expect(message).to.deep.equal([productNotFoundMock]);
   });
 });

@@ -9,11 +9,13 @@ const app = require("../../../src/app");
 const {
   HTTP_OK_SUCCESS,
   HTTP_NOT_FOUND,
+  HTTP_CREATED,
 } = require("../../../src/utils/customMessage");
 const {
   productsMock,
   productByIdMock,
   productNotFoundMock,
+  listafterAddProductMock,
 } = require("../../mocks/products.mocks");
 
 describe("Unit test the controller layer of the application:", () => {
@@ -51,4 +53,18 @@ describe("Unit test the controller layer of the application:", () => {
         done();
       });
   });
+
+  // it("Test for add product from the endpoint '/products'.", (done) => {
+  //   const newProduct = { name: "ProductX" };
+
+  //   chai
+  //     .request(app)
+  //     .post("/products")
+  //     .send(newProduct)
+  //     .end((_err, response) => {
+  //       expect(response.status).to.be.equal(HTTP_CREATED);
+  //       expect(response.body).to.deep.equal(listafterAddProductMock);
+  //       done();
+  //     });
+  // });
 });
