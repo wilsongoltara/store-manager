@@ -15,13 +15,13 @@ const {
   productsMock,
   productByIdMock,
   productNotFoundMock,
-  listafterAddProductMock,
+  productAddedMock,
 } = require("../../mocks/products.mocks");
 
 describe("Unit test the controller layer of the application:", () => {
   afterEach(sinon.restore);
 
-  it("Test if it receives a list of products from the endpoint '/products'.", (done) => {
+  it("GET: a list of products from the endpoint '/products'.", (done) => {
     chai
       .request(app)
       .get("/products")
@@ -32,7 +32,7 @@ describe("Unit test the controller layer of the application:", () => {
       });
   });
 
-  it("Test if it receives a products from the endpoint '/products/:id.", (done) => {
+  it("GET: a products from the endpoint '/products/:id.", (done) => {
     chai
       .request(app)
       .get("/products/1")
@@ -43,7 +43,7 @@ describe("Unit test the controller layer of the application:", () => {
       });
   });
 
-  it("Test if it receives a error message from the endpoint '/products/:id' invalid.", (done) => {
+  it("GET: a error message from the endpoint '/products/:id' invalid.", (done) => {
     chai
       .request(app)
       .get("/products/9999")
@@ -54,17 +54,17 @@ describe("Unit test the controller layer of the application:", () => {
       });
   });
 
-  // it("Test for add product from the endpoint '/products'.", (done) => {
-  //   const newProduct = { name: "ProductX" };
+  it("POST: a product from the endpoint '/products'.", (done) => {
+    const newProduct = { name: "ProductX" };
 
-  //   chai
-  //     .request(app)
-  //     .post("/products")
-  //     .send(newProduct)
-  //     .end((_err, response) => {
-  //       expect(response.status).to.be.equal(HTTP_CREATED);
-  //       expect(response.body).to.deep.equal(listafterAddProductMock);
-  //       done();
-  //     });
-  // });
+    chai
+      .request(app)
+      .post("/products")
+      .send(newProduct)
+      .end((_err, response) => {
+        expect(response.status).to.be.equal(HTTP_CREATED);
+        expect(response.body).to.deep.equal(productAddedMock);
+        done();
+      });
+  });
 });

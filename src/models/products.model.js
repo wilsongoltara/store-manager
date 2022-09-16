@@ -3,7 +3,8 @@ const connection = require('./database/connection');
 const addProduct = async (newProduct) => {
   const sql = 'INSERT INTO StoreManager.products (name) VALUES (?)';
   const [productAdded] = await connection.execute(sql, [newProduct]);
-  return productAdded.insertId;
+  const { insertId } = productAdded;
+  return insertId;
 };
 
 const listProducts = async () => {

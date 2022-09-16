@@ -6,6 +6,8 @@ const productsModel = require('../../../src/models/products.model');
 const {
   productsMock,
   productByIdMock,
+  newProductMock,
+  listAfterAddProductMock,
 } = require('../../mocks/products.mocks');
 
 describe('Unit test the model layer of the application:', () => {
@@ -25,5 +27,13 @@ describe('Unit test the model layer of the application:', () => {
     const product = await productsModel.listProductById(1);
 
     expect(product).to.equal(productByIdMock);
+  });
+
+  it("Test if it post a products from the endpoint '/products", async () => {
+    sinon.stub(connection, 'execute').resolves([{ insertId: 4 }]);
+
+    const id = await productsModel.addProduct('new product');
+
+    expect(id).to.equal(4);
   });
 });
