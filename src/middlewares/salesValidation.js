@@ -16,7 +16,7 @@ const validationProductId = async (req, res, next) => {
     body.map((sale) => productsModel.listProductById(sale.productId)),
   );
   const notFoundProduct = listProducts.some((product) => product.length === 0);
-  
+
   if (hasProductId) {
     return res.status(HTTP_BAD_REQUEST).json({ message: '"productId" is required' });
   }
