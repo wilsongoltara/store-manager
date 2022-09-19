@@ -1,27 +1,36 @@
-const { HTTP_CREATED, HTTP_OK_SUCCESS, HTTP_NOT_FOUND } = require('../utils/customMessage');
+const { HTTP_CREATED, HTTP_OK_SUCCESS } = require('../utils/customMessage');
 const salesModel = require('../models/sales.model');
 
 const addSales = async (newSales) => {
-  const id = await salesModel.addSales(newSales);
-  const salesAdded = {
-    id,
-    itemsSold: newSales,
-  };
+  try {
+    const id = await salesModel.addSales(newSales);
+    const salesAdded = {
+      id,
+      itemsSold: newSales,
+    };
 
-  return { type: HTTP_CREATED, message: salesAdded };
+    return { type: HTTP_CREATED, message: salesAdded };
+  } catch (error) {
+    return error;
+  }
 };
 
 const listSales = async () => {
-  const sales = await salesModel.listSales();
-  return { type: HTTP_OK_SUCCESS, message: sales };
+  try {
+    const sales = await salesModel.listSales();
+    return { type: HTTP_OK_SUCCESS, message: sales };
+  } catch (error) {
+    return error;
+  }
 };
 
 const listSaleById = async (saleId) => {
-  const sale = await salesModel.listSaleById(saleId);
-  return {
-    type: sale.length > 0 ? HTTP_OK_SUCCESS : HTTP_NOT_FOUND,
-    message: sale.length > 0 ? sale : 'Sale not found',
-  };
+  try {
+    const sale = await salesModel.listSaleById(saleId);
+    return { type: HTTP_OK_SUCCESS, message: sale };
+  } catch (error) {
+    return error;
+  }
 };
 
 module.exports = {

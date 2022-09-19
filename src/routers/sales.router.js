@@ -1,12 +1,21 @@
-const router = require('express').Router();
+const routerSales = require('express').Router();
 const salesController = require('../controllers/sales.controller');
-const { validationProductId, validationQuantity } = require('../middlewares/salesValidation');
+const {
+  validationProductId,
+  validationQuantity,
+  validationSale,
+} = require('../middlewares/salesValidation');
 
 // GET
-router.get('/', salesController.listSales);
-router.get('/:id', salesController.listSaleById);
+routerSales.get('/', salesController.listSales);
+routerSales.get('/:id', validationSale, salesController.listSaleById);
 
 // POST
-router.post('/', validationQuantity, validationProductId, salesController.addSales);
+routerSales.post(
+  '/',
+  validationQuantity,
+  validationProductId,
+  salesController.addSales,
+);
 
-module.exports = router;
+module.exports = routerSales;

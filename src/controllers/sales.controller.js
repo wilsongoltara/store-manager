@@ -1,25 +1,34 @@
 const salesService = require('../services/sales.service');
 
 const addSales = async (req, res) => {
-  const newProduct = req.body;
-  const { type, message } = await salesService.addSales(newProduct);
-
-  return res.status(type).json(message);
+  try {
+    const { body } = req;
+    const { type, message } = await salesService.addSales(body);
+    return res.status(type).json(message);
+  } catch (error) {
+    return error;
+  }
 };
 
 const listSales = async (_req, res) => {
-  const { type, message } = await salesService.listSales();
-
-  return res.status(type).json(message);
+  try {
+    const { type, message } = await salesService.listSales();
+    return res.status(type).json(message);
+  } catch (error) {
+    return error;
+  }
 };
 
 const listSaleById = async (req, res) => {
-  const { params: { id } } = req;
-
-  const { type, message } = await salesService.listSaleById(id);
-
-  if (type === 404) return res.status(type).json({ message });
-  return res.status(type).json(message);
+  try {
+    const {
+      params: { id },
+    } = req;
+    const { type, message } = await salesService.listSaleById(id);
+    return res.status(type).json(message);
+  } catch (error) {
+    return error;
+  }
 };
 
 module.exports = {

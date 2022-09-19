@@ -4,6 +4,24 @@ const {
   HTTP_UNPROCESSABLE_ENTITY,
 } = require('../utils/customMessage');
 const productsModel = require('../models/products.model');
+const salesModel = require('../models/sales.model');
+
+const validationSale = async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+    const sales = await salesModel.listSaleById(id);
+
+    if (!sales || sales.length === 0) {
+      return res.status(HTTP_NOT_FOUND).json({ message: 'Sale not found' });
+    }
+
+    next();
+  } catch (error) {
+    return error;
+  }
+};
 
 const validationProductId = async (req, res, next) => {
   const { body } = req;
@@ -18,7 +36,9 @@ const validationProductId = async (req, res, next) => {
   const notFoundProduct = listProducts.some((product) => product.length === 0);
 
   if (hasProductId) {
-    return res.status(HTTP_BAD_REQUEST).json({ message: '"productId" is required' });
+    return res
+      .status(HTTP_BAD_REQUEST)
+      .json({ message: '"productId" is required' });
   }
 
   if (notFoundProduct) {
@@ -42,7 +62,9 @@ const validationQuantity = (req, res, next) => {
   }
 
   if (hasQuantity) {
-    return res.status(HTTP_BAD_REQUEST).json({ message: '"quantity" is required' });
+    return res
+      .status(HTTP_BAD_REQUEST)
+      .json({ message: '"quantity" is required' });
   }
 
   next();
@@ -51,4 +73,5 @@ const validationQuantity = (req, res, next) => {
 module.exports = {
   validationProductId,
   validationQuantity,
+  validationSale,
 };
