@@ -2,7 +2,7 @@ const { expect } = require("chai");
 const sinon = require("sinon");
 
 const connection = require("../../../src/models/database/connection");
-const { newSaleMock } = require("../../mocks/products.mocks");
+const { newSaleMock } = require("../../mocks/sales.mocks");
 const salesModel = require('../../../src/models/sales.model');
 
 describe("Test model sale", () => {

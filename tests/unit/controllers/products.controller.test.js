@@ -1,7 +1,5 @@
 const chai = require("chai");
-const sinon = require("sinon");
 const chaiHttp = require("chai-http");
-
 const { expect } = chai;
 chai.use(chaiHttp);
 
@@ -19,8 +17,6 @@ const {
 } = require("../../mocks/products.mocks");
 
 describe("Test controller products", () => {
-  afterEach(sinon.restore);
-
   it("GET: a list of products from the endpoint '/products'.", (done) => {
     chai
       .request(app)
