@@ -16,8 +16,8 @@ describe("Test service product", () => {
     sinon.stub(productsModel, "listProducts").resolves(productsMock);
 
     const products = await productsService.listProducts();
-
-    expect(products).to.equal(productsMock);
+  
+    expect(products.message).to.deep.equal(productsMock);
   });
 
   it("Test if it receives a products from the endpoint '/products/:id.", async () => {

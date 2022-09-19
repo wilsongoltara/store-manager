@@ -8,7 +8,7 @@ const salesModel = require('../../../src/models/sales.model');
 describe("Test model sale", () => {
   afterEach(sinon.restore);
 
-  it("Test if it post a products from the endpoint '/sales", async () => {
+  it("Test if it post a sale from the endpoint '/sales", async () => {
     sinon.stub(connection, "execute").resolves([{ insertId: 4 }]);
 
     const id = await salesModel.addSales(newSaleMock);

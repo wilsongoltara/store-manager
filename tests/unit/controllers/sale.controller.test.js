@@ -1,9 +1,11 @@
 const chai = require("chai");
+const sinon = require("sinon");
 const chaiHttp = require("chai-http");
 const { expect } = chai;
 chai.use(chaiHttp);
 
 const app = require("../../../src/app");
+const salesModel = require("../../../src/models/sales.model");
 const {
   HTTP_CREATED,
   HTTP_OK_SUCCESS,
@@ -17,7 +19,11 @@ const {
 } = require("../../mocks/sales.mocks");
 
 describe("Test controller sales", () => {
-  it("GET: a list product from the endpoint '/sales'.", (done) => {
+  afterEach(sinon.restore);
+
+  it("GET: a list sales from the endpoint '/sales'.", (done) => {
+    sinon.stub(salesModel, "listSales").resolves(listSalesMock);
+
     chai
       .request(app)
       .get("/sales")
@@ -28,7 +34,8 @@ describe("Test controller sales", () => {
       });
   });
 
-  it("GET: a product from the endpoint '/sales/:id'.", (done) => {
+  it("GET: a sale from the endpoint '/sales/:id'.", (done) => {
+    sinon.stub(salesModel, "listSaleById").resolves(saleSelectedMock);
     chai
       .request(app)
       .get("/sales/1")
@@ -39,7 +46,7 @@ describe("Test controller sales", () => {
       });
   });
 
-  it("GET: a error message from the endpoint '/products/:id' invalid.", (done) => {
+  it("GET: a error message from the endpoint '/sales/:id' invalid.", (done) => {
     chai
       .request(app)
       .get("/sales/9999")
@@ -50,7 +57,9 @@ describe("Test controller sales", () => {
       });
   });
 
-  it("POST: a product from the endpoint '/sales'.", (done) => {
+  it("POST: a sale from the endpoint '/sales'.", (done) => {
+    sinon.stub(salesModel, 'addSales').resolves(3);
+
     chai
       .request(app)
       .post("/sales")
