@@ -10,7 +10,9 @@ const validationNameProduct = (req, res, next) => {
     body: { name },
   } = req;
 
-  if (!name) { return res.status(HTTP_BAD_REQUEST).json({ message: '"name" is required' }); }
+  if (!name) {
+    return res.status(HTTP_BAD_REQUEST).json({ message: '"name" is required' });
+  }
   if (name && name.length < 5) {
     return res
       .status(HTTP_UNPROCESSABLE_ENTITY)
@@ -21,16 +23,20 @@ const validationNameProduct = (req, res, next) => {
 };
 
 const validationProduct = async (req, res, next) => {
-  const {
-    params: { id },
-  } = req;
-  const product = await productsModel.listProductById(id);
+  try {
+    const {
+      params: { id },
+    } = req;
+    const product = await productsModel.listProductById(id);
 
-  if (!product || product.length === 0) {
-    return res.status(HTTP_NOT_FOUND).json({ message: 'Product not found' });
+    if (!product || product.length === 0) {
+      return res.status(HTTP_NOT_FOUND).json({ message: 'Product not found' });
+    }
+
+    next();
+  } catch (error) {
+    return error;
   }
-
-  next();
 };
 
 module.exports = { validationProduct, validationNameProduct };
