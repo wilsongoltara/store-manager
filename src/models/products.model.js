@@ -10,6 +10,15 @@ const addProduct = async (newProduct) => {
   }
 };
 
+const deleteProduct = async (productId) => {
+  try {
+    const query = 'DELETE FROM StoreManager.products WHERE id = ?';
+    await connection.execute(query, [productId]);
+  } catch (error) {
+    return error;
+  }
+};
+
 const listProductById = async (productId) => {
   try {
     const query = 'SELECT * FROM StoreManager.products WHERE id = ?';
@@ -46,6 +55,7 @@ const updateProduct = async (nameProduct, productId) => {
 
 module.exports = {
   addProduct,
+  deleteProduct,
   listProductById,
   listProducts,
   updateProduct,

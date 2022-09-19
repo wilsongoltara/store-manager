@@ -2,12 +2,22 @@ const productsModel = require('../models/products.model');
 const {
   HTTP_OK_SUCCESS,
   HTTP_CREATED,
+  HTTP_DELETED,
 } = require('../utils/customMessage');
 
 const addProduct = async (newProduct) => {
   try {
     const id = await productsModel.addProduct(newProduct);
     return { type: HTTP_CREATED, message: { id, ...newProduct } };
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteProduct = async (productId) => {
+  try {
+    await productsModel.deleteProduct(productId);
+    return { type: HTTP_DELETED };
   } catch (error) {
     return error;
   }
@@ -48,4 +58,5 @@ module.exports = {
   listProductById,
   listProducts,
   updateProduct,
+  deleteProduct,
 };
