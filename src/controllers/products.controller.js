@@ -47,6 +47,20 @@ const listProductById = async (req, res) => {
   }
 };
 
+const listProductByName = async (req, res) => {
+  try {
+    const {
+      query: { q },
+    } = req;
+
+    const { type, message } = await productsService.listProductByName(q);
+    return res.status(type).json(message);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
+
 const updateProduct = async (req, res) => {
   try {
     const {
@@ -65,6 +79,7 @@ module.exports = {
   addProduct,
   deleteProduct,
   listProductById,
+  listProductByName,
   listProducts,
   updateProduct,
 };

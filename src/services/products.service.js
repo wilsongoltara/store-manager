@@ -34,8 +34,20 @@ const listProducts = async () => {
 
 const listProductById = async (productId) => {
   try {
-    const product = await productsModel.listProductById(productId);
+    const product = await productsModel.listProductById(Number(productId));
     return { type: HTTP_OK_SUCCESS, message: product };
+  } catch (error) {
+    return error;
+  }
+};
+
+const listProductByName = async (productName) => {
+  try {
+    const products = await productsModel.listProducts();
+    const productsByName = products
+      .filter((product) => product.name.includes(productName));
+
+    return { type: HTTP_OK_SUCCESS, message: productsByName };
   } catch (error) {
     return error;
   }
@@ -43,7 +55,7 @@ const listProductById = async (productId) => {
 
 const updateProduct = async (nameProduct, productId) => {
   try {
-    await productsModel.updateProduct(nameProduct, productId);
+    await productsModel.updateProduct(nameProduct, Number(productId));
     return {
       type: HTTP_OK_SUCCESS,
       message: { id: productId, name: nameProduct },
@@ -56,6 +68,7 @@ const updateProduct = async (nameProduct, productId) => {
 module.exports = {
   addProduct,
   listProductById,
+  listProductByName,
   listProducts,
   updateProduct,
   deleteProduct,

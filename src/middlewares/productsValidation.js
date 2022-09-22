@@ -3,6 +3,7 @@ const {
   HTTP_BAD_REQUEST,
   HTTP_UNPROCESSABLE_ENTITY,
   HTTP_NOT_FOUND,
+  HTTP_OK_SUCCESS,
 } = require('../utils/customMessage');
 
 const validationNameProduct = (req, res, next) => {
@@ -39,4 +40,22 @@ const validationProduct = async (req, res, next) => {
   }
 };
 
-module.exports = { validationProduct, validationNameProduct };
+const validationQuerySeach = async (req, res, next) => {
+  try {
+    const { query: { q } } = req;
+
+    if (!q || q.length === 0) {
+      const products = await productsModel.listProducts();
+      return res.status(HTTP_OK_SUCCESS).json(products);
+    }
+    next();
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = {
+  validationProduct,
+  validationNameProduct,
+  validationQuerySeach,
+};
