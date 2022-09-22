@@ -10,6 +10,19 @@ const addSales = async (req, res) => {
   }
 };
 
+const deleteSale = async (req, res) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const { type } = await salesService.deleteSale(id);
+    return res.sendStatus(type);
+  } catch (error) {
+    return error;
+  }
+};
+
 const listSales = async (_req, res) => {
   try {
     const { type, message } = await salesService.listSales();
@@ -33,6 +46,7 @@ const listSaleById = async (req, res) => {
 
 module.exports = {
   addSales,
+  deleteSale,
   listSales,
   listSaleById,
 };

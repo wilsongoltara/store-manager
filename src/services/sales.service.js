@@ -1,4 +1,4 @@
-const { HTTP_CREATED, HTTP_OK_SUCCESS } = require('../utils/customMessage');
+const { HTTP_CREATED, HTTP_OK_SUCCESS, HTTP_DELETED } = require('../utils/customMessage');
 const salesModel = require('../models/sales.model');
 
 const addSales = async (newSales) => {
@@ -10,6 +10,15 @@ const addSales = async (newSales) => {
     };
 
     return { type: HTTP_CREATED, message: salesAdded };
+  } catch (error) {
+    return error;
+  }
+};
+
+const deleteSale = async (saleId) => {
+  try {
+    await salesModel.deleteSale(saleId);
+    return { type: HTTP_DELETED };
   } catch (error) {
     return error;
   }
@@ -37,4 +46,5 @@ module.exports = {
   addSales,
   listSales,
   listSaleById,
+  deleteSale,
 };

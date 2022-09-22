@@ -1,4 +1,4 @@
-const routerSales = require('express').Router();
+const salesRouter = require('express').Router();
 const salesController = require('../controllers/sales.controller');
 const {
   validationProductId,
@@ -7,15 +7,30 @@ const {
 } = require('../middlewares/salesValidation');
 
 // GET
-routerSales.get('/', salesController.listSales);
-routerSales.get('/:id', validationSale, salesController.listSaleById);
+salesRouter.get('/', salesController.listSales);
+salesRouter.get('/:id', validationSale, salesController.listSaleById);
 
 // POST
-routerSales.post(
+salesRouter.post(
   '/',
   validationQuantity,
   validationProductId,
   salesController.addSales,
 );
 
-module.exports = routerSales;
+// PUT
+// productsRouter.put(
+//   '/:id',
+//   validationProduct,
+//   validationNameProduct,
+//   productsController.updateProduct,
+// );
+
+// DELETE
+salesRouter.delete(
+  '/:id',
+  validationSale,
+  salesController.deleteSale,
+);
+
+module.exports = salesRouter;
