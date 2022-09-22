@@ -60,7 +60,7 @@ const listSales = async () => {
   }
 };
 
-const listSaleById = async (salesId) => {
+const listSaleById = async (saleId) => {
   try {
     const query = `
     SELECT
@@ -73,9 +73,23 @@ const listSaleById = async (salesId) => {
       s.id = sp.sale_id
     WHERE
       s.id = ?`;
-    const [sale] = await connection.execute(query, [Number(salesId)]);
+    const [sale] = await connection.execute(query, [saleId]);
 
     return sale;
+  } catch (error) {
+    return error;
+  }
+};
+
+const updateSale = async (productId, quantity, saleId) => {
+  try {
+    const query = `
+      UPDATE
+        StoreManager.sales_products
+      SET
+        quantity = ?
+      WHERE sale_id = ? AND product_id = ?`;
+    await connection.execute(query, [quantity, saleId, productId]);
   } catch (error) {
     return error;
   }
@@ -86,4 +100,5 @@ module.exports = {
   deleteSale,
   listSales,
   listSaleById,
+  updateSale,
 };

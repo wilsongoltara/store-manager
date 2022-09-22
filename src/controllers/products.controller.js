@@ -11,6 +11,19 @@ const addProduct = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const {
+      params: { id },
+    } = req;
+
+    const { type } = await productsService.deleteProduct(id);
+    return res.sendStatus(type);
+  } catch (error) {
+    return error;
+  }
+};
+
 const listProducts = async (_req, res) => {
   try {
     const { type, message } = await productsService.listProducts();
@@ -44,19 +57,6 @@ const updateProduct = async (req, res) => {
     return res.status(type).json(message);
   } catch (error) {
     console.error(error);
-    return error;
-  }
-};
-
-const deleteProduct = async (req, res) => {
-  try {
-    const {
-      params: { id },
-    } = req;
-
-    const { type } = await productsService.deleteProduct(id);
-    return res.sendStatus(type);
-  } catch (error) {
     return error;
   }
 };

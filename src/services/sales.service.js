@@ -1,4 +1,8 @@
-const { HTTP_CREATED, HTTP_OK_SUCCESS, HTTP_DELETED } = require('../utils/customMessage');
+const {
+  HTTP_CREATED,
+  HTTP_OK_SUCCESS,
+  HTTP_DELETED,
+} = require('../utils/customMessage');
 const salesModel = require('../models/sales.model');
 
 const addSales = async (newSales) => {
@@ -17,7 +21,7 @@ const addSales = async (newSales) => {
 
 const deleteSale = async (saleId) => {
   try {
-    await salesModel.deleteSale(saleId);
+    await salesModel.deleteSale(Number(saleId));
     return { type: HTTP_DELETED };
   } catch (error) {
     return error;
@@ -35,8 +39,24 @@ const listSales = async () => {
 
 const listSaleById = async (saleId) => {
   try {
-    const sale = await salesModel.listSaleById(saleId);
+    const sale = await salesModel.listSaleById(Number(saleId));
     return { type: HTTP_OK_SUCCESS, message: sale };
+  } catch (error) {
+    return error;
+  }
+};
+
+const updateSale = async (newSales, saleId) => {
+  try {
+    await Promise.all(
+      newSales.map(({ productId, quantity }) =>
+        salesModel.updateSale(productId, quantity, Number(saleId))),
+    );
+
+    return {
+      type: HTTP_OK_SUCCESS,
+      message: { saleId, itemsUpdated: newSales },
+    };
   } catch (error) {
     return error;
   }
@@ -44,7 +64,8 @@ const listSaleById = async (saleId) => {
 
 module.exports = {
   addSales,
+  deleteSale,
   listSales,
   listSaleById,
-  deleteSale,
+  updateSale,
 };

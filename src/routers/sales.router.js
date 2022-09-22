@@ -19,12 +19,13 @@ salesRouter.post(
 );
 
 // PUT
-// productsRouter.put(
-//   '/:id',
-//   validationProduct,
-//   validationNameProduct,
-//   productsController.updateProduct,
-// );
+salesRouter.put(
+  '/:id',
+  validationSale,
+  validationProductId,
+  validationQuantity,
+  salesController.updateSale,
+);
 
 // DELETE
 salesRouter.delete(
